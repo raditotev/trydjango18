@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Welcome | {% endblock%}
+
+{% block jumbotron %}
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+	<div class="container">
+		<div class="col-sm-6">
+			<h1>Try Django 1.8</h1>
+			<p>The MVp Landing page is designed to get your project started. The goal is to help you launch as soon as possible with the least amount of investment using time or money</p>
+			<p>Join us today.</p>
+			<p>
+				<a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
+			</p>
+		</div>
+		<div class="col-sm-6">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/4OlGpS2LG_M?list=PLEsfXFp6DpzRcd-q4vR5qAgOZUuz8041S" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-3 pull-right">
+		{% if request.user.is_authenticated and request.user.is_staff %}
+		<p class="lead">List of signed up users:</p>
+		<table class="table">
+			{% for user in users %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ user.email }}</td>
+				<!-- <td>{{ user.timestamp }}</td> -->
+			</tr>
+			{% endfor %}
+		</table>
+
+		{% else %}
+		<p class="lead">Sign Up</p>
+		<form method='POST' action=''>
+			{% csrf_token %}
+			{{ form|crispy }}
+
+			<input class='btn btn-primary' type="submit" value="Sign Up">
+		</form>
+		{% endif %}
+	</div>
+	<div class="col-sm-3">
+		<p class="lead text-align-center">
+			Django and Bootstrap.<br><br>
+			<i class="fa fa-code fa-5x"></i>
+		</p>
+
+	</div>
+	<div class="col-sm-3">
+		<p class="lead text-align-center">
+			Created for Starters.<br><br>
+			<i class="fa fa-play-circle fa-5x"></i>
+		</p>
+	</div>
+	<div class="col-sm-3">
+		<p class="lead text-align-center">
+			Always Open Source.<br><br>
+			<i class="fa fa-github fa-5x"></i>
+		</p>
+	</div>
+</div>
+
+{% endblock %}
